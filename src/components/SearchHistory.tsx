@@ -1,18 +1,10 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchGithubUser } from '../store/userSlice';
-import { fetchGithubRepos } from '../store/repoSlice';
-import type {AppDispatch, RootState} from "../store";
-
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import type {RootState} from "../store";
 
 const SearchHistory: React.FC = () => {
     const history = useSelector((state: RootState) => state.searchHistory.history);
-    const dispatch = useDispatch<AppDispatch>();
-
-    const handleClick = (username: string) => {
-        dispatch(fetchGithubUser(username));
-        dispatch(fetchGithubRepos(username));
-    };
 
     if (!history.length) return null;
 
@@ -22,12 +14,7 @@ const SearchHistory: React.FC = () => {
             <ul style={{ listStyle: 'none', padding: 0 }}>
                 {history.map((username) => (
                     <li key={username}>
-                        <button
-                            style={{ background: 'none', border: 'none', color: '#0366d6', cursor: 'pointer', textDecoration: 'underline' }}
-                            onClick={() => handleClick(username)}
-                        >
-                            {username}
-                        </button>
+                        <Link to={`/user/${username}`}>{username}</Link>
                     </li>
                 ))}
             </ul>
