@@ -1,16 +1,31 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import SearchBar from '../components/SearchBar';
-import { useSelector } from 'react-redux';
-import type {RootState} from "../store";
-
+import RepoList from '../components/RepoList';
+import SearchHistory from '../components/SearchHistory';
+import {clearRepos, fetchGithubRepos} from '../store/repoSlice';
+import {addSearchTerm} from '../store/searchHistorySlice';
+import {useDispatch, useSelector} from "react-redux";
+import type {AppDispatch, RootState} from "../store";
 
 const Home: React.FC = () => {
     const { user, loading, error } = useSelector((state: RootState) => state.user);
+    const dispatch = useDispatch<AppDispatch>();
+
+    // Загружаем репозитории когда найден новый пользователь
+    useEffect(() => {
+        if (user?.login) {
+            dispatch(fetchGithubRepos(user.login));
+            dispatch(addSearchTerm(user.login));
+        } else {
+            dispatch(clearRepos());
+        }
+    }, [user, dispatch]);
 
     return (
         <div style={{ maxWidth: 480, margin: '40px auto', padding: 24, background: '#fafafa', borderRadius: 8 }}>
             <h1>GitHub User Explorer</h1>
             <SearchBar />
+            <SearchHistory />
             {loading && <p>Загрузка...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {user && (
@@ -23,6 +38,7 @@ const Home: React.FC = () => {
                     <p>{user.bio}</p>
                     <p>Репозиториев: {user.public_repos}</p>
                     <p>Подписчиков: {user.followers} | Подписок: {user.following}</p>
+                    <RepoList />
                 </div>
             )}
         </div>
