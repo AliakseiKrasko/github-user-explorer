@@ -13,11 +13,11 @@ import {LIMITS} from "../../constans";
 import {usePagination} from "../../hooks/usePagination.ts";
 import {setPage, setSearchTerm, setSelectedLanguage} from "../../store/repoSlice.ts";
 import {LoadingStateEnum} from "../../types/github.ts";
-import LoadingSpinner from "../ui/LoadingSpinner.tsx";
-import ErrorMessage from "../ui/ErrorMessage.tsx";
+import LoadingSpinner from "../ui/loadingSpinner/LoadingSpinner.tsx";
+import ErrorMessage from "../ui/errorMessage/ErrorMessage.tsx";
 import LanguageFilter from "../ui/languageFilter/LanguageFilter.tsx";
 import RepoCard from "../repoCard/RepoCard.tsx";
-import Pagination from "../ui/Pagination.tsx";
+import Pagination from "../ui/pagination/Pagination.tsx";
 
 
 

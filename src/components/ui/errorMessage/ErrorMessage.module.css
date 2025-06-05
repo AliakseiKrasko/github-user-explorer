@@ -1,0 +1,54 @@
+.errorBox {
+    background: #fef2f2; /* red-50 */
+    border: 1px solid #fecaca; /* red-200 */
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.errorRow {
+    display: flex;
+    align-items: flex-start;
+}
+
+.iconBox {
+    flex-shrink: 0;
+}
+
+.icon {
+    height: 1.25rem;
+    width: 1.25rem;
+    color: #f87171; /* red-400 */
+    display: block;
+}
+
+.content {
+    margin-left: 0.75rem;
+    flex: 1;
+}
+
+.text {
+    color: #991b1b; /* red-800 */
+    font-size: 0.95rem;
+}
+
+.controls {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.action {
+    color: #dc2626; /* red-600 */
+    background: none;
+    border: none;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    transition: color 0.18s;
+}
+
+.action:hover {
+    color: #ef4444; /* red-500 */
+}

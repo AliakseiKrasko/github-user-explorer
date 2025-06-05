@@ -8,8 +8,8 @@ import {clearUser, fetchGithubUser} from "../../store/userSlice.ts";
 import {clearRepos, fetchGithubRepos} from "../../store/repoSlice.ts";
 import { addSearchTerm } from '../../store/searchHistorySlice.ts';
 import {LoadingStateEnum} from "../../types/github.ts";
-import LoadingSpinner from "../../components/ui/LoadingSpinner.tsx";
-import ErrorMessage from "../../components/ui/ErrorMessage.tsx";
+import LoadingSpinner from "../../components/ui/loadingSpinner/LoadingSpinner.tsx";
+import ErrorMessage from "../../components/ui/errorMessage/ErrorMessage.tsx";
 import UserCard from "../../components/userCard/UserCard.tsx";
 import RepoList from "../../components/repoList/RepoList.tsx";
 
