@@ -1,4 +1,3 @@
-
 export interface GithubUser {
     login: string;
     id: number;
@@ -22,25 +21,11 @@ export interface GithubRepo {
     updated_at: string;
 }
 
-export enum LoadingState {
-    IDLE = 'idle',
-    PENDING = 'pending',
-    FULFILLED = 'fulfilled',
-    REJECTED = 'rejected'
-}
-
-// constants/index.ts
-export const API_CONFIG = {
-    BASE_URL: 'https://api.github.com',
-    REPOS_PER_PAGE: 100,
-    SEARCH_DEBOUNCE_MS: 300,
+export const LoadingStateEnum = {
+    IDLE: 'idle',
+    PENDING: 'pending',
+    FULFILLED: 'fulfilled',
+    REJECTED: 'rejected'
 } as const;
 
-export const STORAGE_KEYS = {
-    SEARCH_HISTORY: 'github_search_history',
-} as const;
-
-export const LIMITS = {
-    SEARCH_HISTORY: 10,
-    REPOS_PER_PAGE: 30,
-} as const;
+export type LoadingState = typeof LoadingStateEnum[keyof typeof LoadingStateEnum];

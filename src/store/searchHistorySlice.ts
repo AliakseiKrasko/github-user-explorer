@@ -1,43 +1,46 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import {LIMITS, STORAGE_KEYS} from "../constans";
 
-const HISTORY_LIMIT = 10
-const STORAGE_KEY = 'search_history'
 
 const loadInitialState = (): string[] => {
-    const data = localStorage.getItem(STORAGE_KEY)
-    return data ? JSON.parse(data) : []
-}
-
-const saveToStorage = (history: string[]) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(history))
-}
+    try {
+        const data = localStorage.getItem(STORAGE_KEYS.SEARCH_HISTORY);
+        return data ? JSON.parse(data) : [];
+    } catch (error) {
+        console.warn('Failed to load search history from localStorage:', error);
+        return [];
+    }
+};
 
 interface SearchHistoryState {
-    history: string[]
+    history: string[];
 }
 
 const initialState: SearchHistoryState = {
     history: loadInitialState(),
-}
+};
 
 const searchHistorySlice = createSlice({
     name: 'searchHistory',
     initialState,
     reducers: {
         addSearchTerm: (state, action: PayloadAction<string>) => {
-            const term = action.payload.trim()
-            if (!term) return
+            const term = action.payload.trim();
+            if (!term) return;
 
-            // удаляем дубликат и добавляем в начало
-            state.history = [term, ...state.history.filter((t) => t !== term)].slice(0, HISTORY_LIMIT)
-            saveToStorage(state.history)
+            state.history = [
+                term,
+                ...state.history.filter((t) => t !== term)
+            ].slice(0, LIMITS.SEARCH_HISTORY);
         },
         clearSearchHistory: (state) => {
-            state.history = []
-            saveToStorage(state.history)
+            state.history = [];
+        },
+        removeSearchTerm: (state, action: PayloadAction<string>) => {
+            state.history = state.history.filter(term => term !== action.payload);
         },
     },
-})
+});
 
-export const { addSearchTerm, clearSearchHistory } = searchHistorySlice.actions
-export default searchHistorySlice.reducer
+export const { addSearchTerm, clearSearchHistory, removeSearchTerm } = searchHistorySlice.actions;
+export default searchHistorySlice.reducer;

@@ -5,7 +5,7 @@ import { store } from './store';
 import Home from './pages/Home';
 import UserDetails from './pages/UserDetails';
 import HistoryPage from './pages/HistoryPage';
-import Navigation from './components/Navigation';
+import Navigation from './components/navigation/Navigation.tsx';
 
 const App: React.FC = () => {
     return (

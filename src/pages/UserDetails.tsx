@@ -3,13 +3,16 @@ import { useParams, Link } from 'react-router-dom';
 import { fetchGithubUser, clearUser } from '../store/userSlice';
 import { fetchGithubRepos, clearRepos } from '../store/repoSlice';
 import { addSearchTerm } from '../store/searchHistorySlice';
-import { useAppDispatch, useAppSelector } from '../hooks';
+// import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectUser, selectUserLoading, selectUserError } from '../store/selectors';
-import { LoadingState } from '../types/github';
+// import { LoadingState } from '../types/github';
 import UserCard from '../components/UserCard';
 import RepoList from '../components/RepoList';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import ErrorMessage from '../components/ui/ErrorMessage';
+import {useAppDispatch} from "../hooks/useAppDispatch.ts";
+import {useAppSelector} from "../hooks/useAppSelector.ts";
+import {LoadingStateEnum} from "../types/github.ts";
 
 const UserDetails: React.FC = () => {
     const { username } = useParams<{ username: string }>();
@@ -31,7 +34,7 @@ const UserDetails: React.FC = () => {
         };
     }, [username, dispatch]);
 
-    const isLoading = loadingState === LoadingState.PENDING;
+    const isLoading = loadingState === LoadingStateEnum.PENDING;
 
     const handleRetry = React.useCallback(() => {
         if (username) {

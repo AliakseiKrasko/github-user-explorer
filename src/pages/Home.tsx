@@ -1,16 +1,15 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import SearchBar from '../components/SearchBar';
 import UserCard from '../components/UserCard';
 import RepoList from '../components/RepoList';
-import {clearRepos, fetchGithubRepos} from '../store/repoSlice';
-import {addSearchTerm} from '../store/searchHistorySlice';
-import {LoadingState} from '../types/github';
+import { clearRepos, fetchGithubRepos } from '../store/repoSlice';
+import { addSearchTerm } from '../store/searchHistorySlice';
+import { selectUser, selectUserLoading, selectUserError } from '../store/selectors';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
-// import ErrorMessage from '../components/ui/ErrorMessage';
-import {useAppDispatch, useAppSelector} from "../hooks/useDebounce.ts";
-import {selectUser, selectUserError, selectUserLoading} from "../store";
-
-
+import ErrorMessage from '../components/ui/ErrorMessage';
+import {useAppSelector} from "../hooks/useAppSelector.ts";
+import {useAppDispatch} from "../hooks/useAppDispatch.ts";
+import {LoadingStateEnum} from "../types/github.ts";
 
 const Home: React.FC = () => {
     const user = useAppSelector(selectUser);
@@ -28,7 +27,7 @@ const Home: React.FC = () => {
         }
     }, [user, dispatch]);
 
-    const isLoading = loadingState === LoadingState.PENDING;
+    const isLoading = loadingState === LoadingStateEnum.PENDING;
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -65,7 +64,7 @@ const Home: React.FC = () => {
                 {!user && !isLoading && !error && (
                     <div className="text-center py-12">
                         <div className="mb-4">
-                            <svg className="mx-auto h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className="mx-auto h-16 w-16 text-gray-400" fill="none" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
                         </div>

@@ -1,8 +1,6 @@
 import React from 'react';
-
-
-import type {GithubUser} from "../types/github.ts";
-import {formatNumber} from "../hooks/useDebounce.ts";
+import type { GithubUser } from '../types/github';
+import { formatNumber } from '../utils/formatters';
 
 interface UserCardProps {
     user: GithubUser;

@@ -1,10 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import { fetchGithubUser, clearUser, clearUserError } from '../store/userSlice';
-import {useAppDispatch, useAppSelector, useDebounce} from '../hooks/useDebounce';
-import {API_CONFIG, LoadingState} from '../types/github';
-import {selectUserLoadingState} from "../store";
-
-
+// import { useAppDispatch, useAppSelector } from '../hooks';
+import { useDebounce } from '../hooks/useDebounce';
+// import { API_CONFIG } from '../constants';
+import { selectUserLoadingState } from '../store/selectors';
+import {useAppDispatch} from "../hooks/useAppDispatch.ts";
+import {useAppSelector} from "../hooks/useAppSelector.ts";
+import {API_CONFIG} from "../constans";
+import {LoadingStateEnum} from "../types/github.ts";
+// import { LoadingState } from '../types/github';
 
 const SearchBar: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -36,7 +40,7 @@ const SearchBar: React.FC = () => {
         }
     }, [debouncedUsername, username, dispatch]);
 
-    const isLoading = loadingState === LoadingState.PENDING;
+    const isLoading = loadingState === LoadingStateEnum.PENDING;
 
     return (
         <form onSubmit={handleSubmit} className="mb-6">

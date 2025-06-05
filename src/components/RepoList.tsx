@@ -1,33 +1,31 @@
 import React, { useMemo } from 'react';
+import { setPage, setSearchTerm, setSelectedLanguage } from '../store/repoSlice';
 import {
-    selectPaginatedRepos,
     selectReposLoading,
     selectReposError,
     selectReposPage,
-    selectReposTotalPages,
     selectUniqueLanguages,
     selectRepos
-} from '../store/';
-import { LoadingState } from '../types/github';
-// import { usePagination } from '../hooks/usePagination';
-// import { LIMITS } from '../constants';
+} from '../store/selectors';
+import { usePagination } from '../hooks/usePagination';
 import RepoCard from './RepoCard';
 import LoadingSpinner from './ui/LoadingSpinner';
 import ErrorMessage from './ui/ErrorMessage';
 import Pagination from './ui/Pagination';
-// import LanguageFilter from './ui/LanguageFilter';
-import {useAppDispatch, useAppSelector} from "../hooks/useDebounce.ts";
-import {setPage, setSearchTerm, setSelectedLanguage} from "../store/userSlice.ts";
-import LanguageFilter from "./ui/LoadingSpinner";
+import LanguageFilter from './ui/LanguageFilter';
+import {useAppDispatch} from "../hooks/useAppDispatch.ts";
+import {useAppSelector} from "../hooks/useAppSelector.ts";
+import {LIMITS} from "../constans";
+import {LoadingStateEnum} from "../types/github.ts";
 
 const RepoList: React.FC = () => {
     const dispatch = useAppDispatch();
     const repos = useAppSelector(selectRepos);
-    const paginatedRepos = useAppSelector(selectPaginatedRepos);
+    // const paginatedRepos = useAppSelector(selectPaginatedRepos);
     const loadingState = useAppSelector(selectReposLoading);
     const error = useAppSelector(selectReposError);
     const currentPage = useAppSelector(selectReposPage);
-    const totalPages = useAppSelector(selectReposTotalPages);
+    // const totalPages = useAppSelector(selectReposTotalPages);
     const uniqueLanguages = useAppSelector(selectUniqueLanguages);
 
     const [searchTerm, setSearchTermLocal] = React.useState('');
@@ -78,7 +76,7 @@ const RepoList: React.FC = () => {
         dispatch(setPage(1));
     }, [dispatch]);
 
-    if (loadingState === LoadingState.PENDING) {
+    if (loadingState === LoadingStateEnum.PENDING) {
         return <LoadingSpinner size="large" text="Загружаем репозитории..." />;
     }
 
@@ -110,7 +108,7 @@ const RepoList: React.FC = () => {
                 </div>
 
                 <LanguageFilter
-                    languages={uniqueLanguages}
+                    languages={uniqueLanguages.filter((l): l is string => l !== null)}
                     selectedLanguage={selectedLanguage}
                     onLanguageChange={handleLanguageChange}
                 />
