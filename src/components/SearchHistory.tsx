@@ -1,8 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../hooks';
-import { selectSearchHistory } from '../store/selectors';
-import { clearSearchHistory, removeSearchTerm } from '../store/searchHistorySlice';
+import {Link} from 'react-router-dom';
+// import { useAppSelector, useAppDispatch } from '../hooks';
+// import { selectSearchHistory } from '../store/selectors';
+import {clearSearchHistory} from '../store/searchHistorySlice';
+import {useAppDispatch, useAppSelector} from "../hooks/useDebounce.ts";
+import {selectSearchHistory} from "../store";
+import {removeSearchTerm} from "../store/userSlice.ts";
+
+
 
 const SearchHistory: React.FC = () => {
     const history = useAppSelector(selectSearchHistory);

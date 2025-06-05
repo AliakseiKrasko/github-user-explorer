@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import { fetchGithubUser, clearUser, clearUserError } from '../store/userSlice';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { useDebounce } from '../hooks/useDebounce';
-import { API_CONFIG } from '../constants';
-import { selectUserLoadingState } from '../store/selectors';
-import { LoadingState } from '../types/github';
+import {useAppDispatch, useAppSelector, useDebounce} from '../hooks/useDebounce';
+import {API_CONFIG, LoadingState} from '../types/github';
+import {selectUserLoadingState} from "../store";
+
+
 
 const SearchBar: React.FC = () => {
     const [username, setUsername] = useState('');

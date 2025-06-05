@@ -1,7 +1,10 @@
 import React from 'react';
-import { GithubRepo } from '../types/github';
-import { formatDate, formatNumber, truncateText } from '../utils/formatters';
-import { getLanguageColor } from '../utils/github';
+// import { GithubRepo } from '../types/github';
+// import { formatDate, formatNumber, truncateText } from '../utils/formatters';
+import {formatDate, formatNumber, getLanguageColor, truncateText} from "../hooks/useDebounce.ts";
+import type {GithubRepo} from "../types/github.ts";
+
+// import { getLanguageColor } from '../utils/github';
 
 interface RepoCardProps {
     repo: GithubRepo;

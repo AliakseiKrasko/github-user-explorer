@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useAppSelector } from '../hooks';
-import { selectSearchHistory } from '../store/selectors';
+import {useAppSelector} from "../hooks/useDebounce.ts";
+import {selectSearchHistory} from "../store";
+
 
 const Navigation: React.FC = () => {
     const location = useLocation();

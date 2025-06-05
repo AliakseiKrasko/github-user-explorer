@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import SearchBar from '../components/SearchBar';
 import UserCard from '../components/UserCard';
 import RepoList from '../components/RepoList';
-import { clearRepos, fetchGithubRepos } from '../store/repoSlice';
-import { addSearchTerm } from '../store/searchHistorySlice';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { selectUser, selectUserLoading, selectUserError } from '../store/selectors';
-import { LoadingState } from '../types/github';
+import {clearRepos, fetchGithubRepos} from '../store/repoSlice';
+import {addSearchTerm} from '../store/searchHistorySlice';
+import {LoadingState} from '../types/github';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
-import ErrorMessage from '../components/ui/ErrorMessage';
+// import ErrorMessage from '../components/ui/ErrorMessage';
+import {useAppDispatch, useAppSelector} from "../hooks/useDebounce.ts";
+import {selectUser, selectUserError, selectUserLoading} from "../store";
+
+
 
 const Home: React.FC = () => {
     const user = useAppSelector(selectUser);

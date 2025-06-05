@@ -1,6 +1,4 @@
 import React, { useMemo } from 'react';
-import { useAppSelector, useAppDispatch } from '../hooks';
-import { setPage, setSearchTerm, setSelectedLanguage } from '../store/repoSlice';
 import {
     selectPaginatedRepos,
     selectReposLoading,
@@ -9,15 +7,18 @@ import {
     selectReposTotalPages,
     selectUniqueLanguages,
     selectRepos
-} from '../store/selectors';
+} from '../store/';
 import { LoadingState } from '../types/github';
-import { usePagination } from '../hooks/usePagination';
-import { LIMITS } from '../constants';
+// import { usePagination } from '../hooks/usePagination';
+// import { LIMITS } from '../constants';
 import RepoCard from './RepoCard';
 import LoadingSpinner from './ui/LoadingSpinner';
 import ErrorMessage from './ui/ErrorMessage';
 import Pagination from './ui/Pagination';
-import LanguageFilter from './ui/LanguageFilter';
+// import LanguageFilter from './ui/LanguageFilter';
+import {useAppDispatch, useAppSelector} from "../hooks/useDebounce.ts";
+import {setPage, setSearchTerm, setSelectedLanguage} from "../store/userSlice.ts";
+import LanguageFilter from "./ui/LoadingSpinner";
 
 const RepoList: React.FC = () => {
     const dispatch = useAppDispatch();
