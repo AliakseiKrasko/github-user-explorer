@@ -1,0 +1,43 @@
+.repoListWrapper {
+    margin-top: 1.5rem;
+}
+
+.filtersBox {
+    margin-bottom: 1.5rem;
+}
+
+.heading {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.searchBox {
+    margin-bottom: 1rem;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db; /* gray-300 */
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.searchInput:focus {
+    border-color: #2563eb; /* blue-500 */
+    box-shadow: 0 0 0 2px #60a5fa33;
+}
+
+.repoGrid {
+    display: grid;
+    gap: 1rem;
+}
+
+.emptyText {
+    color: #6b7280; /* gray-500 */
+    text-align: center;
+    padding: 2rem 0;
+}

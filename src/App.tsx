@@ -2,9 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import Home from './pages/Home';
-import UserDetails from './pages/UserDetails';
-import HistoryPage from './pages/HistoryPage';
+import Home from './pages/home/Home.tsx';
+import UserDetails from './pages/userDetails/UserDetails.tsx';
+import HistoryPage from './pages/historyPage/HistoryPage.tsx';
 import Navigation from './components/navigation/Navigation.tsx';
 
 const App: React.FC = () => {

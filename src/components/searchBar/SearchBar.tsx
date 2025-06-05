@@ -1,14 +1,12 @@
 import React, { useState, useCallback } from 'react';
-import { fetchGithubUser, clearUser, clearUserError } from '../store/userSlice';
-// import { useAppDispatch, useAppSelector } from '../hooks';
-import { useDebounce } from '../hooks/useDebounce';
-// import { API_CONFIG } from '../constants';
-import { selectUserLoadingState } from '../store/selectors';
-import {useAppDispatch} from "../hooks/useAppDispatch.ts";
-import {useAppSelector} from "../hooks/useAppSelector.ts";
-import {API_CONFIG} from "../constans";
-import {LoadingStateEnum} from "../types/github.ts";
-// import { LoadingState } from '../types/github';
+import styles from './SearchBar.module.css';
+import {useAppDispatch} from "../../hooks/useAppDispatch.ts";
+import {useAppSelector} from "../../hooks/useAppSelector.ts";
+import {selectUserLoadingState} from "../../store/selectors.ts";
+import {useDebounce} from "../../hooks/useDebounce.ts";
+import {API_CONFIG} from "../../constans";
+import {clearUser, clearUserError, fetchGithubUser} from "../../store/userSlice.ts";
+import {LoadingStateEnum} from "../../types/github.ts";
 
 const SearchBar: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -43,27 +41,27 @@ const SearchBar: React.FC = () => {
     const isLoading = loadingState === LoadingStateEnum.PENDING;
 
     return (
-        <form onSubmit={handleSubmit} className="mb-6">
-            <div className="flex gap-2">
-                <div className="flex-1 relative">
+        <form onSubmit={handleSubmit} className={styles.form}>
+            <div className={styles.inputWrap}>
+                <div className={styles.inputBox}>
                     <input
                         type="text"
                         value={username}
                         onChange={handleChange}
                         placeholder="Введите GitHub username"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className={styles.input}
                         disabled={isLoading}
                     />
                     {isLoading && (
-                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                            <div className="w-4 h-4 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600" />
+                        <div className={styles.loaderWrap}>
+                            <div className={styles.loader} />
                         </div>
                     )}
                 </div>
                 <button
                     type="submit"
                     disabled={!username.trim() || isLoading}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className={styles.button}
                 >
                     Поиск
                 </button>

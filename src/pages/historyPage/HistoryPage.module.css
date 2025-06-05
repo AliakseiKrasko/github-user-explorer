@@ -1,0 +1,60 @@
+.screenBg {
+    min-height: 100vh;
+    background: #f9fafb; /* gray-50 */
+}
+
+.container {
+    max-width: 40rem; /* 2xl */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem 1rem;
+}
+
+.headerSection {
+    margin-bottom: 1.5rem;
+}
+
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    color: #2563eb; /* blue-600 */
+    text-decoration: none;
+    transition: color 0.2s;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.backLink:hover {
+    color: #1e40af; /* blue-800 */
+}
+
+.backIcon {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+}
+
+.titleSection {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1f2937; /* gray-900 */
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #4b5563; /* gray-600 */
+}
+
+.card {
+    background: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+    border: 1px solid #e5e7eb;
+    padding: 1.5rem;
+}

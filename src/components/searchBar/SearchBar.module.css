@@ -1,0 +1,72 @@
+.form {
+    margin-bottom: 1.5rem;
+}
+
+.inputWrap {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.inputBox {
+    flex: 1;
+    position: relative;
+}
+
+.input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db; /* gray-300 */
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input:focus {
+    border-color: #2563eb; /* blue-500 */
+    box-shadow: 0 0 0 2px #60a5fa33;
+}
+
+.loaderWrap {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+}
+
+.loader {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 9999px;
+    border: 2px solid #d1d5db;
+    border-top: 2px solid #2563eb;
+    animation: spin 0.8s linear infinite;
+    background: transparent;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.button {
+    padding: 0.5rem 1.5rem;
+    background: #2563eb;
+    color: #fff;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+}
+
+.button:hover:not(:disabled) {
+    background: #1d4ed8;
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

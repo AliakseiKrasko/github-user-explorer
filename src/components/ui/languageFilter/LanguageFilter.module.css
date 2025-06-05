@@ -1,0 +1,48 @@
+.wrapper {
+    margin-bottom: 1rem;
+}
+
+.label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #374151; /* gray-700 */
+    margin-bottom: 0.5rem;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.button {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.95rem;
+    border-radius: 9999px;
+    border: 1px solid #d1d5db; /* gray-300 */
+    background: #f3f4f6; /* gray-100 */
+    color: #374151; /* gray-700 */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: background 0.15s, color 0.15s, border 0.15s;
+}
+
+.button:hover {
+    background: #e5e7eb; /* gray-200 */
+}
+
+.active {
+    background: #dbeafe; /* blue-100 */
+    color: #1e40af; /* blue-800 */
+    border: 1.5px solid #93c5fd; /* blue-300 */
+}
+
+.dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 9999px;
+    display: inline-block;
+}

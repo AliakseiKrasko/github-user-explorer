@@ -1,0 +1,54 @@
+.screenBg {
+    min-height: 100vh;
+    background: #f9fafb; /* gray-50 */
+}
+
+.container {
+    max-width: 56rem; /* 4xl */
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1f2937; /* gray-900 */
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #4b5563; /* gray-600 */
+}
+
+.emptyState {
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.emptyIconBox {
+    margin-bottom: 1rem;
+}
+
+.emptyIcon {
+    display: block;
+    margin: 0 auto;
+    width: 4rem;
+    height: 4rem;
+    color: #9ca3af; /* gray-400 */
+}
+
+.emptyTitle {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #1f2937; /* gray-900 */
+    margin-bottom: 0.5rem;
+}
+
+.emptySubtitle {
+    color: #6b7280; /* gray-500 */
+}

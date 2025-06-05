@@ -1,0 +1,82 @@
+.card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    transition: box-shadow 0.2s;
+}
+.card:hover {
+    box-shadow: 0 2px 8px 0 rgba(31, 41, 55, 0.08), 0 1.5px 5px 0 rgba(107, 114, 128, 0.08);
+}
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.link {
+    color: #2563eb;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.link:hover {
+    color: #1e40af;
+}
+
+.description {
+    color: #4b5563;
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stats {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.95rem;
+    color: #6b7280;
+}
+
+.language {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.languageDot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 9999px;
+    display: inline-block;
+}
+
+.statItem {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.icon {
+    width: 1rem;
+    height: 1rem;
+    display: inline-block;
+}
+
+.updated {
+    font-size: 0.8rem;
+    color: #6b7280;
+}

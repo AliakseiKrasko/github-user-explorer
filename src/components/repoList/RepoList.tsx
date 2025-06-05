@@ -1,31 +1,33 @@
 import React, { useMemo } from 'react';
-import { setPage, setSearchTerm, setSelectedLanguage } from '../store/repoSlice';
+import styles from './RepoList.module.css';
+import {useAppDispatch} from "../../hooks/useAppDispatch.ts";
+import {useAppSelector} from "../../hooks/useAppSelector.ts";
 import {
-    selectReposLoading,
+    selectRepos,
     selectReposError,
+    selectReposLoading,
     selectReposPage,
-    selectUniqueLanguages,
-    selectRepos
-} from '../store/selectors';
-import { usePagination } from '../hooks/usePagination';
-import RepoCard from './RepoCard';
-import LoadingSpinner from './ui/LoadingSpinner';
-import ErrorMessage from './ui/ErrorMessage';
-import Pagination from './ui/Pagination';
-import LanguageFilter from './ui/LanguageFilter';
-import {useAppDispatch} from "../hooks/useAppDispatch.ts";
-import {useAppSelector} from "../hooks/useAppSelector.ts";
-import {LIMITS} from "../constans";
-import {LoadingStateEnum} from "../types/github.ts";
+    selectUniqueLanguages
+} from "../../store/selectors.ts";
+import {LIMITS} from "../../constans";
+import {usePagination} from "../../hooks/usePagination.ts";
+import {setPage, setSearchTerm, setSelectedLanguage} from "../../store/repoSlice.ts";
+import {LoadingStateEnum} from "../../types/github.ts";
+import LoadingSpinner from "../ui/LoadingSpinner.tsx";
+import ErrorMessage from "../ui/ErrorMessage.tsx";
+import LanguageFilter from "../ui/languageFilter/LanguageFilter.tsx";
+import RepoCard from "../repoCard/RepoCard.tsx";
+import Pagination from "../ui/Pagination.tsx";
+
+
+
 
 const RepoList: React.FC = () => {
     const dispatch = useAppDispatch();
     const repos = useAppSelector(selectRepos);
-    // const paginatedRepos = useAppSelector(selectPaginatedRepos);
     const loadingState = useAppSelector(selectReposLoading);
     const error = useAppSelector(selectReposError);
     const currentPage = useAppSelector(selectReposPage);
-    // const totalPages = useAppSelector(selectReposTotalPages);
     const uniqueLanguages = useAppSelector(selectUniqueLanguages);
 
     const [searchTerm, setSearchTermLocal] = React.useState('');
@@ -85,25 +87,25 @@ const RepoList: React.FC = () => {
     }
 
     if (!repos.length) {
-        return <p className="text-gray-500 text-center py-8">Репозитории не найдены.</p>;
+        return <p className={styles.emptyText}>Репозитории не найдены.</p>;
     }
 
     const actualTotalPages = Math.ceil(filteredRepos.length / LIMITS.REPOS_PER_PAGE);
 
     return (
-        <div className="mt-6">
-            <div className="mb-6">
-                <h3 className="text-lg font-semibold mb-4">
+        <div className={styles.repoListWrapper}>
+            <div className={styles.filtersBox}>
+                <h3 className={styles.heading}>
                     Публичные репозитории ({filteredRepos.length})
                 </h3>
 
-                <div className="mb-4">
+                <div className={styles.searchBox}>
                     <input
                         type="text"
                         placeholder="Поиск по названию или описанию..."
                         value={searchTerm}
                         onChange={(e) => handleSearchChange(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className={styles.searchInput}
                     />
                 </div>
 
@@ -114,7 +116,7 @@ const RepoList: React.FC = () => {
                 />
             </div>
 
-            <div className="grid gap-4">
+            <div className={styles.repoGrid}>
                 {paginatedFilteredRepos.map((repo) => (
                     <RepoCard key={repo.id} repo={repo} />
                 ))}
