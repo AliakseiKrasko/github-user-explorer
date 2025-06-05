@@ -31,8 +31,11 @@ export const fetchGithubUser = createAsyncThunk<GithubUser, string>(
         try {
             const response = await axios.get<GithubUser>(`https://api.github.com/users/${username}`);
             return response.data;
-        } catch (error: any) {
-            return rejectWithValue(error.response?.data?.message || 'User not found');
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error) && error.response) {
+                return rejectWithValue(error.response.data?.message || 'User not found');
+            }
+            return rejectWithValue('User not found');
         }
     }
 );
