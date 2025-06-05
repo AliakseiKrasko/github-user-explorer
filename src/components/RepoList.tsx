@@ -1,33 +1,137 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import type {RootState} from "../store";
-
+import React, { useMemo } from 'react';
+import { useAppSelector, useAppDispatch } from '../hooks';
+import { setPage, setSearchTerm, setSelectedLanguage } from '../store/repoSlice';
+import {
+    selectPaginatedRepos,
+    selectReposLoading,
+    selectReposError,
+    selectReposPage,
+    selectReposTotalPages,
+    selectUniqueLanguages,
+    selectRepos
+} from '../store/selectors';
+import { LoadingState } from '../types/github';
+import { usePagination } from '../hooks/usePagination';
+import { LIMITS } from '../constants';
+import RepoCard from './RepoCard';
+import LoadingSpinner from './ui/LoadingSpinner';
+import ErrorMessage from './ui/ErrorMessage';
+import Pagination from './ui/Pagination';
+import LanguageFilter from './ui/LanguageFilter';
 
 const RepoList: React.FC = () => {
-    const { repos, loading, error } = useSelector((state: RootState) => state.repos);
+    const dispatch = useAppDispatch();
+    const repos = useAppSelector(selectRepos);
+    const paginatedRepos = useAppSelector(selectPaginatedRepos);
+    const loadingState = useAppSelector(selectReposLoading);
+    const error = useAppSelector(selectReposError);
+    const currentPage = useAppSelector(selectReposPage);
+    const totalPages = useAppSelector(selectReposTotalPages);
+    const uniqueLanguages = useAppSelector(selectUniqueLanguages);
 
-    if (loading) return <p>Загрузка репозиториев...</p>;
-    if (error) return <p style={{ color: 'red' }}>{error}</p>;
-    if (!repos.length) return <p>Репозитории не найдены.</p>;
+    const [searchTerm, setSearchTermLocal] = React.useState('');
+    const [selectedLanguage, setSelectedLanguageLocal] = React.useState('');
+
+    const filteredRepos = useMemo(() => {
+        let filtered = repos;
+
+        if (searchTerm) {
+            filtered = filtered.filter(repo =>
+                repo.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                repo.description?.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        }
+
+        if (selectedLanguage) {
+            filtered = filtered.filter(repo => repo.language === selectedLanguage);
+        }
+
+        return filtered;
+    }, [repos, searchTerm, selectedLanguage]);
+
+    const paginatedFilteredRepos = useMemo(() => {
+        const startIndex = (currentPage - 1) * LIMITS.REPOS_PER_PAGE;
+        return filteredRepos.slice(startIndex, startIndex + LIMITS.REPOS_PER_PAGE);
+    }, [filteredRepos, currentPage]);
+
+    const { hasNextPage, hasPreviousPage } = usePagination({
+        totalItems: filteredRepos.length,
+        itemsPerPage: LIMITS.REPOS_PER_PAGE,
+        currentPage,
+    });
+
+    const handlePageChange = React.useCallback((page: number) => {
+        dispatch(setPage(page));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [dispatch]);
+
+    const handleSearchChange = React.useCallback((value: string) => {
+        setSearchTermLocal(value);
+        dispatch(setSearchTerm(value));
+        dispatch(setPage(1));
+    }, [dispatch]);
+
+    const handleLanguageChange = React.useCallback((language: string) => {
+        setSelectedLanguageLocal(language);
+        dispatch(setSelectedLanguage(language));
+        dispatch(setPage(1));
+    }, [dispatch]);
+
+    if (loadingState === LoadingState.PENDING) {
+        return <LoadingSpinner size="large" text="Загружаем репозитории..." />;
+    }
+
+    if (error) {
+        return <ErrorMessage message={error} />;
+    }
+
+    if (!repos.length) {
+        return <p className="text-gray-500 text-center py-8">Репозитории не найдены.</p>;
+    }
+
+    const actualTotalPages = Math.ceil(filteredRepos.length / LIMITS.REPOS_PER_PAGE);
 
     return (
-        <div style={{ marginTop: 24 }}>
-            <h3>Публичные репозитории:</h3>
-            <ul style={{ paddingLeft: 0 }}>
-                {repos.map(repo => (
-                    <li key={repo.id} style={{ marginBottom: 8, listStyle: 'none' }}>
-                        <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
-                            <strong>{repo.name}</strong>
-                        </a>
-                        {repo.description && <div style={{ fontSize: 14 }}>{repo.description}</div>}
-                        <div style={{ fontSize: 12, color: '#555' }}>
-                            ★ {repo.stargazers_count} | Forks: {repo.forks_count} | {repo.language} | Обновлено: {new Date(repo.updated_at).toLocaleDateString()}
-                        </div>
-                    </li>
+        <div className="mt-6">
+            <div className="mb-6">
+                <h3 className="text-lg font-semibold mb-4">
+                    Публичные репозитории ({filteredRepos.length})
+                </h3>
+
+                <div className="mb-4">
+                    <input
+                        type="text"
+                        placeholder="Поиск по названию или описанию..."
+                        value={searchTerm}
+                        onChange={(e) => handleSearchChange(e.target.value)}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                </div>
+
+                <LanguageFilter
+                    languages={uniqueLanguages}
+                    selectedLanguage={selectedLanguage}
+                    onLanguageChange={handleLanguageChange}
+                />
+            </div>
+
+            <div className="grid gap-4">
+                {paginatedFilteredRepos.map((repo) => (
+                    <RepoCard key={repo.id} repo={repo} />
                 ))}
-            </ul>
+            </div>
+
+            {actualTotalPages > 1 && (
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={actualTotalPages}
+                    onPageChange={handlePageChange}
+                    hasNextPage={hasNextPage}
+                    hasPreviousPage={hasPreviousPage}
+                />
+            )}
         </div>
     );
 };
 
-export default RepoList;
+export default React.memo(RepoList);
