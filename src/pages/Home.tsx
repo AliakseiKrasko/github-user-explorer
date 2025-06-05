@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import SearchBar from '../components/SearchBar';
 import RepoList from '../components/RepoList';
-import SearchHistory from '../components/SearchHistory';
 import {clearRepos, fetchGithubRepos} from '../store/repoSlice';
 import {addSearchTerm} from '../store/searchHistorySlice';
 import {useDispatch, useSelector} from "react-redux";
@@ -25,7 +24,7 @@ const Home: React.FC = () => {
         <div style={{ maxWidth: 480, margin: '40px auto', padding: 24, background: '#fafafa', borderRadius: 8 }}>
             <h1>GitHub User Explorer</h1>
             <SearchBar />
-            <SearchHistory />
+            {/*<SearchHistory />*/}
             {loading && <p>Загрузка...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {user && (
