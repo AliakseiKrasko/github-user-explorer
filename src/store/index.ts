@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
+import userReducer from './userSlice';
 
 export const store = configureStore({
     reducer: {
-        // в будущем сюда добавим слайсы (например, user, searchHistory, repos)
+        user: userReducer,
     },
 });
 
-// Типы для хуков
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
