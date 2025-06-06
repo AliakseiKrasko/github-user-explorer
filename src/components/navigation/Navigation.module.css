@@ -1,6 +1,6 @@
 .navbar {
     display: flex;
-    background: #ef4444; /* red-500 */
+    background: #b1b1b1; /* red-500 */
     border-bottom: 1px solid #e5e7eb; /* gray-200 */
     position: sticky;
     top: 0;
