@@ -3,8 +3,6 @@ import styles from './SearchBar.module.css';
 import {useAppDispatch} from "../../hooks/useAppDispatch.ts";
 import {useAppSelector} from "../../hooks/useAppSelector.ts";
 import {selectUserLoadingState} from "../../store/selectors.ts";
-import {useDebounce} from "../../hooks/useDebounce.ts";
-import {API_CONFIG} from "../../constans";
 import {clearUser, clearUserError, fetchGithubUser} from "../../store/userSlice.ts";
 import {LoadingStateEnum} from "../../types/github.ts";
 
@@ -12,31 +10,27 @@ const SearchBar: React.FC = () => {
     const [username, setUsername] = useState('');
     const dispatch = useAppDispatch();
     const loadingState = useAppSelector(selectUserLoadingState);
-    const debouncedUsername = useDebounce(username.trim(), API_CONFIG.SEARCH_DEBOUNCE_MS);
 
     const handleSubmit = useCallback((e: React.FormEvent) => {
         e.preventDefault();
-        if (debouncedUsername) {
-            dispatch(fetchGithubUser(debouncedUsername));
+        const trimmedUsername = username.trim();
+        if (trimmedUsername) {
+            dispatch(fetchGithubUser(trimmedUsername));
         }
-    }, [debouncedUsername, dispatch]);
+    }, [username, dispatch]);
 
     const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setUsername(value);
 
+        // Очищаем данные только если поле полностью пустое
         if (!value.trim()) {
             dispatch(clearUser());
         } else {
+            // Очищаем только ошибки, но не делаем поиск
             dispatch(clearUserError());
         }
     }, [dispatch]);
-
-    React.useEffect(() => {
-        if (debouncedUsername && username === debouncedUsername) {
-            dispatch(fetchGithubUser(debouncedUsername));
-        }
-    }, [debouncedUsername, username, dispatch]);
 
     const isLoading = loadingState === LoadingStateEnum.PENDING;
 
@@ -48,7 +42,7 @@ const SearchBar: React.FC = () => {
                         type="text"
                         value={username}
                         onChange={handleChange}
-                        placeholder="Введите GitHub username"
+                        placeholder="Введите GitHub username и нажмите Enter или кнопку Поиск"
                         className={styles.input}
                         disabled={isLoading}
                     />
