@@ -13,8 +13,8 @@ import ErrorMessage from "../../components/ui/errorMessage/ErrorMessage.tsx";
 import UserCard from "../../components/userCard/UserCard.tsx";
 import RepoList from "../../components/repoList/RepoList.tsx";
 
-const UserDetails: React.FC = () => {
-    const { username } = useParams<{ username: string }>();
+const UserDetails = () => {
+    const { username } = useParams();
     const dispatch = useAppDispatch();
     const user = useAppSelector(selectUser);
     const loadingState = useAppSelector(selectUserLoading);
@@ -50,7 +50,7 @@ const UserDetails: React.FC = () => {
                         to="/"
                         className={styles.backLink}
                     >
-                        <svg className={styles.backIcon} fill="currentColor" viewBox="0 0 20 20">
+                        <svg className={styles.backIcon} fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
                             <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
                         </svg>
                         Назад к поиску
@@ -78,7 +78,7 @@ const UserDetails: React.FC = () => {
                 {!user && !isLoading && !error && (
                     <div className={styles.emptyState}>
                         <div className={styles.emptyIconBox}>
-                            <svg className={styles.emptyIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className={styles.emptyIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor" width="48" height="48">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
